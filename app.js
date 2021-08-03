@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const userRouter = require("./router/user_router");
 const passport = require('passport');
 const core = require('cors');
+const dashboard = require('./router/index')
 //define data type
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -20,11 +21,9 @@ const errorMiddleWare = require("./middleware/error_midleware");
 app.use('/api/user', userRouter);
 
 app.use(errorMiddleWare);
+app.use(dashboard);
 
 
-app.get('/',(req,res) => {
-  res.send('Database')
-})
 //set available port to connect our server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (err, suc) => {
