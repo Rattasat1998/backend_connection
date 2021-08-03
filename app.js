@@ -20,6 +20,10 @@ const errorMiddleWare = require("./middleware/error_midleware");
 
 app.use('/api/user', userRouter);
 
+if(process.env.NODE_ENV === 'development'){
+  app.use(morgan('dev'));
+}
+
 app.use(errorMiddleWare);
 app.use(dashboard);
 
