@@ -21,6 +21,10 @@ app.use('/api/user', userRouter);
 
 app.use(errorMiddleWare);
 
+
+app.get('/',(req,res) => {
+  res.send('Database')
+})
 //set available port to connect our server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (err, suc) => {
