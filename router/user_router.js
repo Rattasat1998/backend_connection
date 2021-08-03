@@ -9,4 +9,8 @@ userRouter.post("/deleteUser", userController.deleteUser);
 
 userRouter.get("/getAllUsers", userController.getAllUsers);
 
+userRouter.post("/auth", userController.authentication);
+
+userRouter.get("/getprofile", userController.getprofile);
+
 module.exports = userRouter;

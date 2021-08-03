@@ -1,9 +1,8 @@
 //local database connection
 const mongoose = require("mongoose");
-const dbConnection = "mongodb+srv://activatex:123@cluster0.oqu5s.mongodb.net/Connection?retryWrites=true&w=majority";
-
+const config = require("../database/​​​​config");
 mongoose
-  .connect(dbConnection ,{
+  .connect(config.database ,{
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,

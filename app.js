@@ -1,16 +1,21 @@
 //we will be using express.js for creating our service
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
-
+const userRouter = require("./router/user_router");
+const passport = require('passport');
+const core = require('cors');
 //define data type
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+
+app.use(passport.initialize());
+require('./database/passport')(passport);
 require("./database/mongoose_db");
 
 const errorMiddleWare = require("./middleware/error_midleware");
-
-const userRouter = require("./router/user_router");
 
 app.use('/api/user', userRouter);
 
