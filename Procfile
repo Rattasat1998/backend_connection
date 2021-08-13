@@ -1,1 +1,1 @@
-worker: nodemon app
+web: node app.js

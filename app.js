@@ -14,6 +14,7 @@ const mulImageSchema = require('./model/image_multiple');
 var multer  = require('multer');
 const path= require('path');
 
+
 //define data type
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:false}));
@@ -27,13 +28,17 @@ const errorMiddleWare = require("./middleware/error_midleware");
 
 app.use('/api/user', userRouter);
 
+app.get('/',(req,res) => {
+  res.send('Database')
+});
+
 if(process.env.NODE_ENV === 'development'){
   app.use(morgan('dev'));
 }
 
 app.use(errorMiddleWare);
 // Dashboard Page
-app.use(dashboard);
+
 // IMAGE for User
 app.use('/uploads', express.static(__dirname +'/uploads'));
 var storage = multer.diskStorage({
@@ -81,8 +86,6 @@ var storage = multer.diskStorage({
 });
 
 //set available port to connect our server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, (err, suc) => {
-  if (err) throw err;
-  console.log(`Server running on P ort ${PORT}`);
+app.listen((process.env.PORT || 5000), function(){
+  console.log('listening on *:5000');
 });
