@@ -3,14 +3,14 @@ const userController = require("../controllers/user_controller");
 
 userRouter.post("/addNewUser", userController.addNewUser);
 
-userRouter.post("/updateUser/:id", userController.updateUser);
+userRouter.post("/updateUser", userController.updateUser);
 
 userRouter.post("/deleteUser", userController.deleteUser);
 
-userRouter.get("/:id", userController.getUserID);
+userRouter.get("/getAllUsers", userController.getAllUsers);
 
 userRouter.post("/auth", userController.authentication);
 
-userRouter.get("/getprofile/profile/myprofile", userController.getprofile);
+userRouter.get("/getprofile", userController.getprofile);
 
 module.exports = userRouter;

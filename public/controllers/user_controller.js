@@ -26,7 +26,7 @@ const addNewUser = async (req, res, next) => {
       } else {
         return res.status(400).json({
           result: false,
-          message: "มีชื่อผู้ใช้อยู่แล้ว",
+          message: "บันทึกข้อมูลล้มเหลว",
         });
       }
     } catch (error) {
@@ -38,10 +38,10 @@ const addNewUser = async (req, res, next) => {
 //update user
 const updateUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id, {}, { lean: true });
+    const user = await User.findById(req.body.id, {}, { lean: true });
     if (user) {
       const willBeUpdated = await User.findByIdAndUpdate(
-        { _id: req.params.id },
+        { _id: req.body.id },
         req.body,
         { lean: true, new: true }
       );
@@ -88,25 +88,22 @@ const deleteUser = async (req, res, next) => {
 };
 
 //get all data
-const getUserID = async (req, res, next) => {
-  try{
-    const user = await User.findById(req.params.id);
-    console.log(user);
-    res.json(user);
-    //res.json({user: user.name})
-}catch(err){
-    //This works when user is not found
-    res.send("Could Not 12");
-}
+const getAllUsers = async (req, res, next) => {
+  try {
+    const allData = await User.find({}, {}, { lean: true });
+    return res.status(200).json(allData);
+  } catch (error) {
+    next(createError(error));
+  }
 };
 
 const authentication = async (req, res) => {
   User.findOne({
-    email: req.body.email
+    name: req.body.name
   },function(err, user){
     if(err) throw err
     if(!user){
-      res.status(403).send({success: false, msg: 'Authentication Failed ไม่พบ Email'})
+      res.status(403).send({success: false, msg: 'Authentication Failed ไม่พบ User'})
     }
     else{
       user.comparePassword(req.body.password, function(err,isMatch){
@@ -127,7 +124,7 @@ const getprofile = async (req, res) => {
   {
     var token = req.headers.authorization.split(' ')[1]
     var decodedtoken = jwt.decode(token,config.secret)
-    return res.json({success: true, id: decodedtoken._id})
+    return res.json({success: true, msg: 'Hello Welcome Mrs. ' + decodedtoken.name})
   }
   else{
     return res.json({success:false,msg:'No Header'})
@@ -139,8 +136,7 @@ module.exports = {
   addNewUser,
   updateUser,
   deleteUser,
-  getUserID,
+  getAllUsers,
   authentication,
   getprofile
-
 };
