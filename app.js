@@ -32,10 +32,6 @@ app.get('/',(req,res) => {
   res.send('Database')
 });
 
-if(process.env.NODE_ENV === 'development'){
-  app.use(morgan('dev'));
-}
-
 app.use(errorMiddleWare);
 // Dashboard Page
 
@@ -63,8 +59,6 @@ var storage = multer.diskStorage({
      })
      const savedimage= await imagepost.save()
      res.json(imagepost.image);
-     //res.json(savedimage)
-     //res.json(imagepost)
    
  })
 // IMAGE for Product
@@ -86,6 +80,6 @@ var storage = multer.diskStorage({
 });
 const PORT = process.env.PORT || 8080
 //set available port to connect our server
-app.listen(PORT, function(){
-  console.log('listening on *:8080');
-});
+app.listen(PORT, ()=>{
+  console.log(`Serer is running. ${PORT}`)
+})
